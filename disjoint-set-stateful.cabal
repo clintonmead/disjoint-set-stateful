@@ -17,7 +17,11 @@ category:             Data
 build-type:           Simple
 cabal-version:        >=1.10
 tested-with: GHC == 8.0.2
-bug-reports: https://github.com/clintonmead/generic-enum/issues
+bug-reports: https://github.com/clintonmead/disjoint-set-stateful/issues
+
+source-repository head
+  type: git
+  location: https://github.com/clintonmead/disjoint-set-stateful.git
 
 library
   exposed-modules:      Data.DisjointSet.Int.Monadic, Data.DisjointSet.Int
