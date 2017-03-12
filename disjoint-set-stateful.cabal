@@ -32,7 +32,6 @@ library
 
 Test-Suite tests
   type: exitcode-stdio-1.0
-  exposed-modules: Tests.hs
   other-modules:  Data.DisjointSet.Int.Monadic, Data.DisjointSet.Int, Data.DisjointSet.Int.Monadic.Impl
   main-is: Tests.hs
   build-depends: base == 4.9.*, vector == 0.12.*, primitive == 0.6.*, ref-tf == 0.4.*, hspec == 2.4.*
