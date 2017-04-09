@@ -23,6 +23,8 @@ quering through the entire structure.
 This package implements both of the above features.
 -}
 module Data.DisjointSet.Int (
+  DisjointIntSet(DisjointIntSet),
+  create,
   find,
   count,
   findAndCount,
@@ -34,8 +36,9 @@ module Data.DisjointSet.Int (
 where
 
 import Data.Vector.Unboxed (Vector, (!))
-import Data.DisjointSet.Int.Monadic (DisjointIntSet(DisjointIntSet))
+import Data.DisjointSet.Int.Monadic (DisjointIntSet(DisjointIntSet), runDisjointIntSet, newDisjointIntSetFixed, union)
 import Data.DisjointSet.Int.Monadic.Impl (PointerOrCount(Pointer, Count), isPointer)
+import Data.Foldable (Foldable, foldl', mapM_)
 
 import Prelude (
   Int,
@@ -45,10 +48,14 @@ import Prelude (
   snd,
   (/=),
   Maybe (Just, Nothing),
-  (.)
+  (.), (+),
+  max,
+  ($),
+  return
   )
 
 import Data.List (unfoldr)
+import Data.Foldable (foldl')
 
 type VectorT = Vector Int
 
@@ -60,6 +67,22 @@ read v i =
     case (isPointer r) of
       True -> Pointer r
       False -> Count (negate r)
+
+{-|
+'create' creates a 'DisjointIntSet' from a list of int pairs, or indeed any 'Foldable' structure of @(Int, Int)@.
+
+It basically calls 'union' for each of the pairs and freezes the result. Use this when you've got a list of pairs
+for your disjoint set and you have no need to extend it later.
+-}
+create :: Foldable t => t (Int, Int) -> DisjointIntSet
+create l =
+  let
+    maxElem = foldl' (\r (x1,x2) -> max r (max x1 x2)) (-1) l
+  in
+    runDisjointIntSet $ do
+      v <- newDisjointIntSetFixed (maxElem + 1)
+      mapM_ (\(x1,x2) -> union v x1 x2) l
+      return v
 
 {-|
 Both 'find' and 'count', but in one operation, so in theory faster than running them separately.

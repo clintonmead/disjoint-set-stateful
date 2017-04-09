@@ -117,8 +117,12 @@ data DisjointIntSetMonadic m where
 
 {-|
 This is the non-monadic disjoint int set. It can be created by using the monadic operations and then calling
-'freeze', 'unsafeFreeze' or 'runDisjointIntSet' as appropriate. There's not a variable and fixed length version of this
-because well, you can't modify the non-monadic version anyway.
+'freeze', 'unsafeFreeze' or 'runDisjointIntSet' as appropriate.
+
+Alternatively 'Data.DisjointSet.Int.create' can create a disjoint set
+directly from any 'Foldable' structure of int pairs, e.g. and @[(Int, Int)]@.
+
+There's not a variable and fixed length version of this because well, you can't modify the non-monadic version anyway.
 -}
 data DisjointIntSet = DisjointIntSet (Vector Int) (Vector Int) Int Int deriving Show
 

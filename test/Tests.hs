@@ -36,3 +36,4 @@ testds x = do
 main = hspec $ do
   testds (ds (Just 10))
   testds (ds Nothing)
+  testds (create [(0,1), (3,2), (1,2), (8,9), (8,3), (7,4)])
