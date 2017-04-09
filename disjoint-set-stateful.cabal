@@ -1,5 +1,5 @@
 name:                 disjoint-set-stateful
-version:              0.1.0.0
+version:              0.1.1.0
 synopsis:             Monadic disjoint set
 description:
   This package includes a monadic disjoint int set datatype, which can also be "frozen" into a non-monadic queriable
